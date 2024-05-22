@@ -1,0 +1,36 @@
+========== side cart subtotal or price show ==========================
+
+<div class="cart_subtotal">
+    <div class="subtotal_txt">
+      <span>SKUPAJ:</span> <span>{{ cart.item_count }} kos</span>
+    </div>
+      
+   {%- if settings.disable_view_cart -%}
+        <span class="price" id="mini-cart-subtotal">{{ cart.total_price | money_with_currency }}</span>
+      {%- endif -%}
+    </div>
+<style>
+/* cart drawer */
+.cart_subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+</style>
+
+================ cart drawer mein payments trust badges icons or payments iocns ====================
+
+<div class="payment_icon">
+    <img src="https://cdn.shopify.com/s/files/1/0832/5713/1353/files/cart-footer-icon.png?v=1716198862">
+</div>
+<style>
+.payment_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}
+.mini-cart__footer .taxes-discounts {
+  text-align: center;
+}
+</style>
