@@ -1,0 +1,2 @@
+{{ 'now' | date: '%Y' }}
+ex. © 2024 Corridor New York
