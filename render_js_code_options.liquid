@@ -1,0 +1,130 @@
+{% render 'custom_timer' text_timer: block.settings.text_timer %}
+  {
+          "type": "text",
+          "label": "Timer",
+          "id": "text_timer",
+          "info": "use this type: June 29, 2024 23:59:59"
+        },
+
+ let countDownDate = new Date("{{text_timer}}").getTime();
+
+
+=============== full code ==========================
+ {%- when 'text' -%}
+            {% liquid
+              assign letter_spacing = block.settings.letter_spacing | divided_by: 100.0
+            %}
+            <div
+              class="promotion__item promotion__item-{{ block.type }}"
+              {{ block.shopify_attributes }}
+            >
+              {% if block.settings.text != blank %}
+                <a
+                  {% if block.settings.text_link != blank -%}
+                    href="{{ block.settings.text_link }}"
+                  {% else %}
+                    role="link" aria-disabled="true"
+                  {% endif %}
+                  aria-label="Promotion text"
+                  class="block promotion__item-wrap"
+                >
+                  <div
+                    class="promotion__text flex items-center {{ block.settings.text_size }} {{ block.settings.font_weight }} font-{{ block.settings.font_style }} text-{{ block.settings.text_style }}"
+                    style="letter-spacing: {{ letter_spacing }}em;"
+                  >
+                    {{ block.settings.text }}{% render 'custom_timer' text_timer: block.settings.text_timer %}
+                  </div>
+                </a>
+              {% endif %}
+            </div>
+
+{
+          "type": "text",
+          "label": "Timer",
+          "id": "text_timer",
+          "info": "use this type: June 29, 2024 23:59:59"
+        },
+
+
+<div class="countdown-timer-section">
+  <div id="countdown-timer" class="flex cus_conter_timer">
+    <div class="flex counter_col">
+        <span class="hours t_number"></span><span class="t_str">Hours</span>      
+    </div>
+    <div class="flex counter_col">
+        <span class="minutes t_number"></span><span class="t_str">Minutes</span>  
+    </div>
+    <div class="flex counter_col">
+        <span class="seconds t_number"></span><span class="t_str">Seconds</span> 
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let countDownDate = new Date("{{text_timer}}").getTime();
+    let x = setInterval(function() {
+      let now = new Date().getTime();
+      let distance = countDownDate - now;
+
+      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Include additional hours from days
+      hours += Math.floor(distance / (1000 * 60 * 60 * 24)) * 24;
+
+      let hoursElements = document.querySelectorAll(".hours");
+      let minutesElements = document.querySelectorAll(".minutes");
+      let secondsElements = document.querySelectorAll(".seconds");
+
+      hoursElements.forEach(function(element) {
+        element.textContent = hours;
+      });
+
+      minutesElements.forEach(function(element) {
+        element.textContent = minutes;
+      });
+
+      secondsElements.forEach(function(element) {
+        element.textContent = seconds; 
+      });
+
+      if (distance < 0) {
+        clearInterval(x);
+        let countdownTimerElements = document.querySelectorAll("#countdown-timer");
+        countdownTimerElements.forEach(function(element) {
+          element.textContent = "EXPIRED";
+        });
+      }
+    }, 1000);
+  });
+</script>
+
+
+<style>
+  .countdown-timer-section {
+    text-align: center;
+    font-size: 2em;
+    margin: 20px 0;
+  }
+  #countdown-timer span {
+    margin: 0 5px;
+  }
+  .counter_col {
+    flex-direction: column-reverse;
+  }
+  .cus_conter_timer {
+    background-color: #761D1E;
+    margin-left: 5px;
+    padding: 5px 10px;
+}
+.t_number {
+    font-size: 24px;
+}
+.t_str {
+    font-size: 14px;
+}
+</style>
+
+
