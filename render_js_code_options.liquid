@@ -1,4 +1,7 @@
-{% render 'custom_timer' text_timer: block.settings.text_timer %}
+
+{% if block.settings.text_timer !=blank %}
+                     {% render 'custom_timer' text_timer: block.settings.text_timer %}
+                    {% endif %}
   {
           "type": "text",
           "label": "Timer",
