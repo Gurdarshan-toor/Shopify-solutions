@@ -1,0 +1,231 @@
+<div class="multi-items-section page-width">
+    <div class="grid-items {% assign num_blocks = section.blocks | size %}{% case num_blocks %} {% when 1 %} onefr  {% when 2 %} twofr {% when 3 %} threefr {% when 4 %} fourfr{% else %} fivefr {% endcase %}; " style="grid-template-columns: {% assign num_blocks = section.blocks | size %}{% case num_blocks %} {% when 1 %} 1fr {% when 2 %} 1fr 1fr {% when 3 %} 1fr 1fr 1fr {% when 4 %} 1fr 1fr {% else %} 1fr 1fr 1fr {% endcase %}; grid-template-rows: {% assign num_blocks = section.blocks | size %}{% case num_blocks %} {% when 1 %} 1fr {% when 2 %} 1fr{% when 3 %} 1fr {% when 4 %} 1fr{% else %} 1fr 400px {% endcase %}; ">
+        {%- for block in section.blocks -%}
+            {%- case block.type -%}
+            {%- when 'image' -%}
+                <div class="image-section image-{{ forloop.index }}">
+                    {% if block.settings.logo_image != blank %}
+                        <img src="{{ block.settings.logo_image | img_url: 'master' }}" alt="Image">
+                    {% else %}
+                        {{ 'image' | placeholder_svg_tag }}
+                    {% endif %}
+                </div>
+            {%- when 'video' -%}
+                <div class="video-section image-{{ forloop.index }}">
+                    {% if block.settings.video != blank %}
+                        <video autoplay muted loop poster="">
+                            <source src="{{ block.settings.video.sources[0].url }}" type="video/mp4">
+                            <source src="{{ block.settings.video.sources[1].url }}" type="video/ogg">
+                        </video>
+                    {% else %}
+                        {{ 'image' | placeholder_svg_tag }}
+                    {% endif %}
+                </div>
+            {%- when 'product' -%}    
+                <div class="product-section image-{{ forloop.index }}">
+                    {% assign product = block.settings.product.featured_image %}
+                    <div class="prd_img">
+                        <img src="{{ product | img_url:'master' }}" alt="">
+                    </div>
+                </div>
+            {%- when 'collection' -%}    
+                <div class="collection-section image-{{ forloop.index }}">
+                    {% assign collection = collections[block.settings.collection] %}
+                    <div class="coll-img">
+                        <img src="{{ collection.featured_image | img_url: 'master' }}" alt="">
+                    </div>
+                </div>
+            {% endcase %}
+        {% endfor %}
+    </div>
+</div>
+
+
+<style>
+
+.twofr .image-1 {
+    grid-row-end: 1;
+}
+
+.threefr .image-2{
+  grid-column-end:3;
+}
+
+.fivefr .image-4 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.fivefr .image-2 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+
+
+.image-section img {
+    height:100%;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.coll-img img {
+    height: 100%;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.coll-img {
+    height: 100%;
+    display: block;
+    width: 100%;
+}
+
+.video-section video {
+    height: 100%;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.prd_img img {
+    height: 100%;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.prd_img {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+.grid-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 300px 300px;
+    gap: 20px;
+}
+
+.image-section {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.image-2 {
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.image-1 {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+.image-2 {
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.image-5 {
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+@media only screen and (max-width: 767px){
+  .multi-items-section {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.grid-items {
+  grid-template-rows:200px 200px !important;
+  gap: 10px !important;
+}
+
+
+}
+
+
+/* @media only screen and (min-width: 767px){
+  .multi-items-section.page-width {
+    padding: 40px 5rem;
+    padding-bottom: 0px;
+}
+} */
+
+</style>
+
+
+
+
+{% schema %}
+{
+  "name": "Multi items masonry",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_section",
+      "label": "Heading"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "image",
+      "type": "image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Logo image"
+        }
+      ]
+    },
+    {
+      "name": "video",
+      "type": "video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "video"
+        }
+      ]
+    },
+    {
+      "name": "product",
+      "type": "product",
+      "settings": [
+        {
+        "type": "product",
+        "id": "product",
+        "label": "Product"
+        }
+
+      ]
+    },
+    {
+      "name": "collection",
+      "type": "collection",
+      "settings": [
+        {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+        }
+
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multi-items-masonry"
+    }
+  ]
+}
+
+{% endschema %}
