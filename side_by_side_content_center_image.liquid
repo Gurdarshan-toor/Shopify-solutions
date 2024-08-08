@@ -1,0 +1,339 @@
+<section class="content-section">
+
+
+<div class="page-width image_content_container ">
+    {% if section.settings.heading_section !=blank %}
+        <div class="title_container">
+            <h2 class="title inline-richtext h1" >{{ section.settings.heading_section }}</h2>
+        </div>
+    {% endif %}
+    {% if section.settings.cus_rich !=blank %}
+        <div class="cus_para">
+            {{ section.settings.cus_rich }}
+        </div>
+    {% endif %}
+    <div class="text_img_container">
+
+    {% for block in section.blocks %}
+
+        {%- case block.type -%}
+        {%- when 'text' -%}
+        <div class="text_container">
+            <div class="features_wrapper">
+                {% if block.settings.text_logo_image != blank %}
+                    <div class="icon_wrapper">
+                        <img src="{{ block.settings.text_logo_image |  img_url: 'master' }}" alt="">
+                    </div>
+                {% endif %}
+                {% if block.settings.heading !=blank %}
+                    <h2>{{ block.settings.heading }}</h2>
+                {% endif %}
+                {% if block.settings.subtext !=blank %}
+                   {{ block.settings.subtext }}
+                {% endif %}
+            </div>
+            <div class="features_wrapper">
+                {% if block.settings.text_logo_image1 != blank %}
+                    <div class="icon_wrapper">
+                        <img src="{{ block.settings.text_logo_image1 |  img_url: 'master' }}" alt="">
+                    </div>
+                {% endif %}
+                {% if block.settings.heading1 !=blank %}
+                    <h2>{{ block.settings.heading1 }}</h2>
+                {% endif %}
+                {% if block.settings.subtext1 !=blank %}
+                  {{ block.settings.subtext1 }}
+                {% endif %}
+            </div>
+            <div class="features_wrapper">
+                {% if block.settings.text_logo_image2 != blank %}
+                    <div class="icon_wrapper">
+                        <img src="{{ block.settings.text_logo_image2 |  img_url: 'master' }}" alt="">
+                    </div>
+                {% endif %}
+                {% if block.settings.heading2 !=blank %}
+                    <h2>{{ block.settings.heading2 }}</h2>
+                {% endif %}
+                {% if block.settings.subtext2 !=blank %}
+                    {{ block.settings.subtext2 }}
+                {% endif %}
+            </div>
+            <div class="features_wrapper">
+                {% if block.settings.text_logo_image3 != blank %}
+                    <div class="icon_wrapper">
+                        <img src="{{ block.settings.text_logo_image3 |  img_url: 'master' }}" alt="">
+                    </div>
+                {% endif %}
+                {% if block.settings.heading3 !=blank %}
+                    <h2>{{ block.settings.heading3 }}</h2>
+                {% endif %}
+                {% if block.settings.subtext3 !=blank %}
+                    {{ block.settings.subtext3 }}
+                {% endif %}
+            </div>
+        </div>
+    
+        {%- when 'image' -%}
+            {% if block.settings.logo_image != blank %}
+                <div class="img_container">
+                    <div class="img_wrapper">
+                        <img class="vert-move" src="{{ block.settings.logo_image |  img_url: 'master' }}" alt="">
+                    </div>
+                </div>
+            {% endif %}
+
+        {% endcase %}
+    {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .title_container{
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+    .title_container {
+     text-align: center;
+    }
+    .cus_para {
+     text-align: center;
+    }
+    section.content-section {
+    margin-inline: 0;
+    padding-inline: 50px;
+    }
+
+    .img_wrapper img {
+    height:100%;
+    width: 100%;
+    display: block;
+    object-fit:contain;
+    }
+
+    .text_container {
+    flex: 1;
+}
+
+    .text_img_container .img_wrapper {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+
+    .features_wrapper p {
+    font-size: 16px;
+    width: 100%;
+    margin: auto;
+    line-height: 20px;
+    color: #121212;
+}
+    .icon_wrapper img {
+    height: 100%;
+    width: 100%;
+    display: block;
+    max-width: 50px;
+    margin: auto;
+    }
+
+    .features_wrapper {
+    text-align: center;
+    }
+
+    .image_content_container {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    }
+
+    .text_container{
+        /* border: 1px solid green; */
+        width:100%;
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        gap: 3rem;
+    }
+
+    .features_wrapper h2 {
+    font-size: 22px;
+}
+
+    .title_container h2 {
+    margin-top: 0;
+    }
+
+    .img_container{
+        width:100%;
+        padding: 10px;
+    }
+
+    .img_rapper{
+        width: 100%;
+        height: 100%;
+        /* border: 5px solid palevioletred; */
+    }
+    .img_rapper img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .features_rapper{
+        padding: 20px;
+        /* border: 2px solid purple; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .features_rapper h2{
+        margin: 10px 0px;
+    }
+    .icon_raper{
+        width: 10%;
+        /* border: 2px solid orange; */
+    }
+    .icon_raper img{
+        width: 100%;
+        object-fit: cover;
+    }
+
+
+    img.vert-move {
+    -webkit-animation: mover 1s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+    }
+    img.vert-move {
+        -webkit-animation: mover 1s infinite  alternate;
+        animation: mover 1s infinite  alternate;
+    }
+    @-webkit-keyframes mover {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-10px); }
+    }
+    @keyframes mover {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-10px); }
+    }
+
+    @media only screen and (min-width: 992px) {
+        .text_img_container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding-top: 50px;
+            max-width: 1200px;
+            margin: auto;
+        }
+    }
+
+
+
+</style>
+
+{%- schema -%}
+    {
+        "name": "image content",
+         "settings": [
+          {
+          "type": "text",
+          "id": "heading_section",
+          "label": "Heading"
+        },
+          {
+          "type": "richtext",
+          "id": "cus_rich",
+          "label": "paragraph"
+        }
+    ],
+    "blocks": [
+        {
+        "name": "image",
+        "type": "image",
+        "settings": [
+                {
+                "type": "image_picker",
+                "id": "logo_image",
+                "label": "Logo image"
+                }
+        ]
+        },
+        {
+            "type": "text",
+            "name": "text",
+            "settings": [
+                {
+                "type": "image_picker",
+                "id": "text_logo_image",
+                "label": "text image"
+                },
+                {
+                "type": "text",
+                "id": "heading",
+                "default": "Heading",
+                "label": "Heading"
+                },
+                {
+                "type": "richtext",
+                "id": "subtext",
+                "label": "content"
+                },
+                {
+                "type": "image_picker",
+                "id": "text_logo_image1",
+                "label": "text image"
+                },
+                {
+                "type": "text",
+                "id": "heading1",
+                "default": "Heading",
+                "label": "Heading"
+                },
+                {
+                "type": "richtext",
+                "id": "subtext1",
+                "label": "content"
+                },
+                {
+                "type": "image_picker",
+                "id": "text_logo_image2",
+                "label": "text image"
+                },
+                {
+                "type": "text",
+                "id": "heading2",
+                "default": "Heading",
+                "label": "Heading"
+                },
+                {
+                "type": "richtext",
+                "id": "subtext2",
+                "label": "content"
+                },
+                {
+                "type": "image_picker",
+                "id": "text_logo_image3",
+                "label": "text image"
+                },
+                {
+                "type": "text",
+                "id": "heading3",
+                "default": "Heading",
+                "label": "Heading"
+                },
+                {
+                "type": "richtext",
+                "id": "subtext3",
+                "label": "content"
+                }
+          ]
+    }
+  ],
+    "presets": [
+      {
+        "name": "image-content"
+      } 
+    ]
+    }
+    {%- endschema -%}
