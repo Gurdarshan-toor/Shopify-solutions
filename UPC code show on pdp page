@@ -1,0 +1,41 @@
+
+===== Beetel theme ================
+
+
+<div class="product-upc">
+  <p><strong>UPC:</strong> <span id="variant-upc">{{ product.selected_or_first_available_variant.barcode }}</span></p>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const upcSpan = document.getElementById("variant-upc");
+  const productData = {{ product | json }};
+
+  function updateUPCById(variantId) {
+    const variant = productData.variants.find(v => v.id == variantId);
+    if (variant && variant.barcode) {
+      upcSpan.textContent = variant.barcode;
+    } else {
+      upcSpan.textContent = "—";
+    }
+  }
+
+  // Step 1: Initial load
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("variant")) {
+    updateUPCById(urlParams.get("variant"));
+  }
+
+  // Step 2: Observe for URL changes (when variant changes)
+  let lastUrl = location.href;
+  new MutationObserver(() => {
+    if (location.href !== lastUrl) {
+      lastUrl = location.href;
+      const params = new URLSearchParams(location.search);
+      if (params.has("variant")) {
+        updateUPCById(params.get("variant"));
+      }
+    }
+  }).observe(document, {subtree: true, childList: true});
+});
+</script>
