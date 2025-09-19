@@ -1,0 +1,48 @@
+
+======= har variant ke liye alag button link (url) show hoga. =======
+==== beetle theme mein use kiya gya ==============
+
+<div id="amazon-buy-button-container" class="">
+  {% for variant in product.variants %}
+    {% if variant.metafields.custom.amazon_link %}
+      <a id="amazon-link-{{ variant.id }}"  
+         href="{{ variant.metafields.custom.amazon_link }}"  
+         target="_blank"  
+         rel="noopener noreferrer"  
+         class="btn btn--amazon large-btn button"  
+         style="display:none;">
+        Buy on Amazon
+      </a>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const variantSelect = document.querySelector('[name="id"]');
+    if (variantSelect) {
+      variantSelect.addEventListener('change', function() {
+        const selectedVariantId = this.value;
+        const allLinks = document.querySelectorAll('#amazon-buy-button-container .btn--amazon');
+        allLinks.forEach(link => link.style.display = 'none');
+
+        const selectedLink = document.getElementById('amazon-link-' + selectedVariantId);
+        if (selectedLink) {
+          selectedLink.style.display = 'flex';
+        }
+      });
+      
+      // Initial state check for page load
+      const initialVariantId = variantSelect.value;
+      const initialLink = document.getElementById('amazon-link-' + initialVariantId);
+      if (initialLink) {
+          initialLink.style.display = 'flex';
+      }
+    }
+  });
+</script> 
+
+
+
+
+
