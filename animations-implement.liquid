@@ -1,0 +1,44 @@
+===== page or sections par animations lagane ke liye ======
+
+https://michalsnik.github.io/aos/
+
+</head tag ke upar rakhna 
+{% comment %} AOS ANIMACTION {% endcomment %}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+===================================================================================
+
+<!-- Body ke end mein -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  // AOS ko properly initialize karein
+  function initAOS() {
+    AOS.init({
+      offset: 100,    // 100px scroll hone par animation start
+      delay: 0,       // No delay
+      duration: 1200,  // Animation duration
+      easing: 'ease-in-out',
+      once: true,     // Animation sirf ek baar ho
+      mirror: false,  // Scroll back karte time animation na ho
+      anchorPlacement: 'top-bottom' // Element top screen ke bottom par aaye tab animation
+    });
+  }
+
+  // DOM load hone par initialize karein
+  document.addEventListener('DOMContentLoaded', initAOS);
+  
+  // Shopify sections load hone par refresh karein
+  document.addEventListener('shopify:section:load', function() {
+    AOS.refresh();
+  });
+  
+  // Page fully load hone par refresh karein
+  window.addEventListener('load', function() {
+    AOS.refresh();
+  });
+</script>
+
+===============================================
+
+<div data-aos="fade-up"
+     data-aos-anchor-placement="top-bottom">
+</div>
