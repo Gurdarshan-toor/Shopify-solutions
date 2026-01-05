@@ -1,0 +1,142 @@
+==== Marble theme ====
+
+
+{{- 'collection.css' | asset_url | stylesheet_tag -}}
+{{- 'component-card-product.css' | asset_url | stylesheet_tag -}}
+
+<style>
+  .np-collage-container {
+    max-width: 100vw !important;
+    padding: 0 10px !important;
+    margin: 0 auto;
+  }
+
+  .np-collage-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 10px !important;
+  }
+
+  @media (min-width: 990px) {
+    .np-collage-grid {
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 20px !important;
+      grid-auto-flow: dense;
+    }
+  }
+
+  .np-grid-item {
+    grid-column: span 1 !important;
+    width: 100% !important;
+  }
+
+  .np-editorial-big-card {
+    grid-column: 1 / -1 !important;
+  }
+
+  /* Device visibility classes */
+  .hide-desktop { display: block; }
+  .hide-mobile { display: none; }
+
+  @media (min-width: 990px) {
+    .hide-desktop { display: none; }
+    .hide-mobile { display: block; }
+
+    .np-editorial-big-card {
+      grid-column: span 2 !important;
+      grid-row: span 2 !important;
+    }
+    .np-editorial-big-card.is-right {
+      grid-column: 3 / 5 !important;
+    }
+    .np-editorial-big-card.is-left {
+      grid-column: 1 / 3 !important;
+    }
+  }
+
+  .np-editorial-big-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block;
+    border-radius: 4px;
+  }
+
+  .grid__item {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+{% comment %} card-product {% endcomment %}
+
+
+</style>
+
+<div class="np-collage-container">
+  {%- paginate collection.products by 48 -%}
+    
+    <div class="np-collage-grid">
+      {%- assign editorial_idx_ds = 1 -%}
+      {%- assign editorial_idx_mb = 1 -%}
+      
+      {%- for product in collection.products -%}
+        
+        {%- comment -%} 1. DESKTOP IMAGE: (Injects before products for grid flow) {%- endcomment -%}
+        {%- if forloop.index == 1 or forloop.index == 7 or forloop.index == 16 or forloop.index == 23 or forloop.index == 32 -%}
+          {%- assign m_key = 'editorial_image_' | append: editorial_idx_ds -%}
+          {%- assign m_img = collection.metafields.custom[m_key] -%}
+          
+          {%- if m_img != blank -%}
+            {%- assign is_even = editorial_idx_ds | modulo: 2 -%}
+            <div class="np-editorial-big-card hide-mobile {% if is_even == 0 %}is-left{% else %}is-right{% endif %}">
+              <img src="{{ m_img | image_url: width: 1400 }}" alt="Editorial Desktop" loading="lazy">
+            </div>
+          {%- endif -%}
+          {%- assign editorial_idx_ds = editorial_idx_ds | plus: 1 -%}
+        {%- endif -%}
+
+        <div class="np-grid-item">
+          {%- render 'card-product', product_ref: product, collection_ref: collection -%}
+        </div>
+
+        {%- comment -%} 2. MOBILE IMAGE: (Injects exactly after 4, 12, 20... products) {%- endcomment -%}
+        {%- if forloop.index == 4 or forloop.index == 12 or forloop.index == 20 or forloop.index == 28 or forloop.index == 36 -%}
+          {%- assign m_key_mb = 'editorial_image_' | append: editorial_idx_mb -%}
+          {%- assign m_img_mb = collection.metafields.custom[m_key_mb] -%}
+          
+          {%- if m_img_mb != blank -%}
+            <div class="np-editorial-big-card hide-desktop">
+              <img src="{{ m_img_mb | image_url: width: 1400 }}" alt="Editorial Mobile" loading="lazy">
+            </div>
+          {%- endif -%}
+          {%- assign editorial_idx_mb = editorial_idx_mb | plus: 1 -%}
+        {%- endif -%}
+
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <div class="center pt-m pb-m">
+        {%- render 'pagination', paginate: paginate -%}
+      </div>
+    {%- endif -%}
+
+  {%- endpaginate -%}
+</div>
+
+        <script>
+               document.addEventListener('click', function(e) {
+  if (e.target.matches('[data-slider-prev], [data-slider-next]')) {
+    e.preventDefault();
+    const container = e.target.closest('[data-slider-root]');
+    const track = container.querySelector('[data-slider-track]');
+    const width = track.offsetWidth;
+    
+    if (e.target.hasAttribute('data-slider-next')) {
+      track.scrollBy({ left: width, behavior: 'smooth' });
+    } else {
+      track.scrollBy({ left: -width, behavior: 'smooth' });
+    }
+  }
+});
+    </script>
